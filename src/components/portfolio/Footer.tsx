@@ -6,7 +6,7 @@ const socialLinks = [
   { name: "GitHub", icon: Github, href: "#" },
   { name: "LinkedIn", icon: Linkedin, href: "#" },
   { name: "Twitter", icon: Twitter, href: "#" },
-  { name: "Email", icon: Mail, href: "mailto:hello@pawelszostak.dev" },
+  { name: "Email", icon: Mail, href: "email.dev" },
 ];
 
 export default function Footer() {
@@ -29,7 +29,7 @@ export default function Footer() {
 
           {/* Contact Button */}
           <a
-            href="mailto:hello@pawelszostak.dev"
+            href="mailto:hello.dev"
             className="btn-primary inline-flex items-center gap-2"
           >
             <Mail className="w-4 h-4" />
