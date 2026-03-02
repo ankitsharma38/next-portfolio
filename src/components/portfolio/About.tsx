@@ -20,11 +20,10 @@ const mindsetImages = [
   },
 ];
 
-// Position mapping: 0 = center/front, 1 = left/back, 2 = right/back
 const IMAGE_POSITIONS = [
-  { translateX: "0%",    scale: 1,    opacity: 1,    zIndex: 10, filter: "blur(0px)" },
-  { translateX: "-45%",  scale: 0.8,  opacity: 0.4,  zIndex: 1,  filter: "blur(2px)" },
-  { translateX: "45%",   scale: 0.8,  opacity: 0.4,  zIndex: 1,  filter: "blur(2px)" },
+  { translateX: "0%",   scale: 1,   opacity: 1,   zIndex: 10, filter: "blur(0px)" },
+  { translateX: "-45%", scale: 0.8, opacity: 0.4, zIndex: 1,  filter: "blur(2px)" },
+  { translateX: "45%",  scale: 0.8, opacity: 0.4, zIndex: 1,  filter: "blur(2px)" },
 ];
 
 function ImageCarousel() {
@@ -36,42 +35,26 @@ function ImageCarousel() {
   }, []);
 
   return (
-    <div className="relative w-full flex justify-center items-center" style={{ height: 200, overflow: "visible" }}>
+    <div className="relative w-full h-[200px] flex justify-center items-center overflow-visible">
       {mindsetImages.map((img, imgIdx) => {
         const posIdx = (imgIdx - (tick % 3) + 3) % 3;
         const pos = IMAGE_POSITIONS[posIdx];
         return (
           <div
             key={imgIdx}
+            className="absolute w-55% h-[200px] transition-all duration-1000 ease-[cubic-bezier(0.34,1.56,0.64,1)] origin-center"
             style={{
-              position: "absolute",
               width: "55%",
-              height: 200,
               zIndex: pos.zIndex,
               transform: `translateX(${pos.translateX}) scale(${pos.scale})`,
               opacity: pos.opacity,
               filter: pos.filter,
-              transition: "all 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
-              transformOrigin: "center center",
             }}
           >
-            <div
-              className="relative w-full h-full overflow-hidden"
-              style={{ 
-                borderRadius: 10, 
-                border: "1px solid rgba(124,58,237,0.3)",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
-              }}
-            >
-              <img
-                src={img.src}
-                alt={img.label}
-                className="w-full h-full object-cover"
-              />
-              {/* Label bar */}
-              <div className="absolute bottom-0 left-0 right-0 py-2 px-3"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)" }}>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-white font-bold">
+            <div className="relative w-full h-full overflow-hidden rounded-[10px] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              <img src={img.src} alt={img.label} className="w-full h-full object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 py-1.5 px-3 bg-linear-to-t from-black/95 to-transparent">
+                <span className="text-[9px] uppercase tracking-[0.2em] text-white/90 font-bold">
                   {img.label}
                 </span>
               </div>
@@ -83,41 +66,31 @@ function ImageCarousel() {
   );
 }
 
-/* ══════════════════════════════════════════════════════════════
-   TECH STACK
-══════════════════════════════════════════════════════════════ */
 const techStack = [
-  { name: "Node.js",    icon: "⬡" },
-  { name: "Tailwind",   icon: "◈" },
-  { name: "Docker",     icon: "🐳" },
-  { name: "Git",        icon: "◆" },
-  { name: "Next.js",    icon: "▲" },
-  { name: "React",      icon: "⚛" },
-  { name: "TypeScript", icon: "TS" },
-  { name: "Python",     icon: "🐍" },
-  { name: "PostgreSQL", icon: "🐘" },
-  { name: "Prisma",     icon: "◉" },
+  { name: "Node.js",    icon: "⬡", color: "#68a063" },
+  { name: "Tailwind",   icon: "◈", color: "#38bdf8" },
+  { name: "Docker",     icon: "🐳", color: "#2496ed" },
+  { name: "Git",        icon: "◆", color: "#f34f29" },
+  { name: "Next.js",    icon: "▲", color: "#ffffff" },
+  { name: "React",      icon: "⚛", color: "#61dafb" },
+  { name: "TypeScript", icon: "TS", color: "#3178c6" },
+  { name: "Python",     icon: "🐍", color: "#3776ab" },
+  { name: "PostgreSQL", icon: "🐘", color: "#336791" },
+  { name: "Prisma",     icon: "◉", color: "#5a67d8" },
 ];
-const marqueeItems = [...techStack, ...techStack];
+const marqueeItems = [...techStack, ...techStack, ...techStack, ...techStack];
 
-/* ══════════════════════════════════════════════════════════════
-   SECTION TITLE
-══════════════════════════════════════════════════════════════ */
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 4 }}>
-      <h3 style={{ fontSize: 32, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.04em", lineHeight: 1 }}>
+    <div className="mb-2">
+      <h3 className="text-[32px] font-black text-white leading-none tracking-[-0.04em]">
         {children}
       </h3>
-      <div style={{ marginTop: 6, width: 40, height: 4, borderRadius: 2, background: "#7c3aed" }} />
+      <div className="mt-[6px] w-10 h-1 rounded-full bg-[#7c3aed]" />
     </div>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════
-   ANIMATED CARD WRAPPER
-   Phase: hidden → entering (fade+slide) → settled (CSS hover active)
-══════════════════════════════════════════════════════════════ */
 interface CardProps {
   children: React.ReactNode;
   className?: string;
@@ -155,12 +128,17 @@ function Card({ children, className = "", style = {}, delay = 0, noHover = false
           transform: "translateY(0)",
           transition: `opacity 0.65s ease, transform 0.65s ease`,
         }
-      : { opacity: 1, transform: "translateY(0)" }; // explicit transform to prevent "jump" when settling
+      : { opacity: 1, transform: "translateY(0)" };
 
   return (
     <div
       ref={ref}
-      className={`about-card ${phase === "settled" && !noHover ? "about-card-hoverable" : ""} ${className}`}
+      className={`
+        bg-[#1C1C1F] rounded-[18px] border border-white/10 backdrop-blur-[20px] 
+        shadow-[0_10px_30px_-5px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,255,255,0.02)] transition-all duration-300 ease-out
+        ${phase === "settled" && !noHover ? "hover:border-blue-500/40 hover:shadow-[0_10px_40px_-5px_rgba(59,130,246,0.25),inset_0_0_0_1px_rgba(255,255,255,0.05)]" : ""} 
+        ${className}
+      `}
       style={{ ...entranceStyle, ...style }}
     >
       {children}
@@ -168,354 +146,160 @@ function Card({ children, className = "", style = {}, delay = 0, noHover = false
   );
 }
 
-/* ══════════════════════════════════════════════════════════════
-   MAIN ABOUT SECTION
-══════════════════════════════════════════════════════════════ */
 export default function About() {
   return (
-    <section
-      id="about"
-      className="about-section pb-32 pt-16 px-4 max-w-5xl mx-auto"
-    >
-      {/* Content sits above ::before / ::after pseudo overlays */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3" style={{ gap: 16 }}>
+    <section id="about" className="relative pb-16 pt-16 px-4 max-w-5xl mx-auto overflow-hidden">
+      {/* Inline Styles to replace global CSS */}
+      <style jsx>{`
+        @keyframes marquee-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scan-line {
+          0% { left: 0%; }
+          100% { left: 100%; }
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        .animate-marquee-left {
+          animation: marquee-left 50s linear infinite;
+        }
+        .animate-scan-line {
+          animation: scan-line 3s linear infinite;
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+      `}</style>
 
-        {/* ───────── ROW 1 ───────── */}
+      {/* Background Dot Grid */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.45]" 
+           style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
 
-        {/* Name Card */}
-        <Card
-          className="relative overflow-hidden flex items-center justify-center bg-[#1C1C1F]"
-          style={{ padding: "8px 16px", minHeight: 145 }}
-          delay={0}
-          noHover
-        >
-          {/* Central radial glow from screenshot */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%)",
-            }}
-          />
-
-          <div className="relative z-10 text-center flex flex-col items-center" style={{ gap: 16 }}>
-            <div>
-              <div
-                style={{
-                  fontSize: 38, fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1,
-                  background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.5))",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                  filter: "drop-shadow(0 0 15px rgba(255,255,255,0.35))",
-                }}
-              >
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        {/* ROW 1: Name & Education */}
+        <Card className="flex items-center justify-center min-h-[145px] p-[8px_16px]" noHover>
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.08)_0%,transparent_60%)]" />
+          <div className="relative z-10 text-center flex flex-col items-center gap-4">
+            <div className="space-y-0">
+              <div className="text-[38px] font-black tracking-[-0.04em] leading-none text-transparent bg-clip-text bg-linear-to-b from-white via-white to-white/50 drop-shadow-[0_0_15px_rgba(255,255,255,0.35)]">
                 ANKIT
               </div>
-              <div
-                style={{
-                  fontSize: 38, fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1,
-                  background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.5))",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                  filter: "drop-shadow(0 0 15px rgba(255,255,255,0.35))",
-                }}
-              >
+              <div className="text-[38px] font-black tracking-[-0.04em] leading-none text-transparent bg-clip-text bg-linear-to-b from-white via-white to-white/50 drop-shadow-[0_0_15px_rgba(255,255,255,0.35)]">
                 SHARMA
               </div>
             </div>
-            <div className="flex flex-col items-center" style={{ gap: 14 }}>
-              <div style={{ height: 1, width: 50, background: "rgba(255,255,255,0.1)" }} />
-              <span
-                style={{
-                  fontSize: 10, color: "rgba(255,255,255,0.4)",
-                  textTransform: "uppercase", letterSpacing: "0.4em", fontWeight: 500
-                }}
-              >
+            <div className="flex flex-col items-center gap-[14px]">
+              <div className="h-px w-[50px] bg-white/10" />
+              <span className="text-[10px] text-white/40 uppercase tracking-[0.4em] font-medium italic">
                 Fullstack Developer
               </span>
             </div>
           </div>
         </Card>
 
-        {/* Education bar — interactive card stack */}
-        <Card
-          className="md:col-span-2 relative overflow-hidden group"
-          style={{ padding: 0, height: 145, background: "#1C1C1F" }}
-          delay={120}
-          noHover
-        >
-          {/* hover hint label */}
-          <div
-            className="absolute top-2.5 left-0 right-0 flex justify-center pointer-events-none z-30
-                        transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1"
-          >
-            <span
-              style={{
-                fontSize: 8, textTransform: "uppercase", letterSpacing: "0.22em",
-                color: "rgba(167,139,250,0.6)", fontWeight: 700,
-                background: "rgba(255,255,255,0.03)", backdropFilter: "blur(8px)",
-                padding: "3px 12px", borderRadius: 999,
-                border: "1px solid rgba(124,58,237,0.15)",
-              }}
-            >
+        <Card className="md:col-span-2 min-h-[145px] relative overflow-hidden group p-0" noHover delay={120}>
+          <div className="absolute top-2.5 left-0 right-0 flex justify-center pointer-events-none z-30 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+            <span className="text-[8px] uppercase tracking-[0.22em] text-purple-400/60 font-bold bg-white/5 backdrop-blur-md px-3 py-[3px] rounded-full border border-purple-500/15">
               Hover to read more
             </span>
           </div>
 
-          {/* Card Stack Container */}
           <div className="absolute inset-0 flex items-end justify-center px-0 pb-0 z-10">
             {[
-              {
-                label: "Science Club",
-                text: "Active member of GenAI Science at AGH. Training CV models for autonomous systems.",
-                variant: "subcard-left"
-              },
-              {
-                label: "University",
-                text: "CS & Intelligent Systems at AGH — Ranked #1 IT program in the country.",
-                variant: "subcard-mid"
-              },
-              {
-                label: "Competitions",
-                text: "3rd Place at Cassini Hackathon and Econverse Startup Finalist. Expert in logic.",
-                variant: "subcard-right"
-              },
+              { label: "Science Club", text: "Active member of GenAI Science at AGH. Training CV models for autonomous systems.", pos: "left" },
+              { label: "University", text: "CS & Intelligent Systems at AGH — Ranked #1 IT program in the country.", pos: "mid" },
+              { label: "Competitions", text: "3rd Place at Cassini Hackathon and Econverse Startup Finalist. Expert in logic.", pos: "right" },
             ].map((col, i) => (
               <div
                 key={i}
-                className={`education-subcard ${col.variant} relative bg-[#171719] border border-white/5 rounded-lg p-5 flex-1 cursor-default`}
-                style={{ 
-                  minWidth: "38%", 
-                  marginLeft: i === 0 ? 0 : "-8%",
-                  zIndex: i === 1 ? 20 : 10 
-                }}
+                className={`
+                  relative flex-1 bg-[#171719] border border-white/5 rounded-lg p-5 cursor-default transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] h-[200px]
+                  translate-y-[125px]
+                  ${col.pos === 'left' ? '-rotate-1 hover:translate-y-[85px] hover:-rotate-3' : ''}
+                  ${col.pos === 'mid' ? 'z-20 rotate-0 hover:translate-y-[78px] hover:scale-[1.02]' : 'z-10'}
+                  ${col.pos === 'right' ? 'rotate-1 hover:translate-y-[85px] hover:rotate-3' : ''}
+                  hover:z-30 hover:border-purple-500/45 hover:shadow-[0_0_40px_rgba(124,58,237,0.25)]
+                `}
+                style={{ minWidth: "38%", marginLeft: i === 0 ? 0 : "-8%" }}
               >
-                <h4
-                  style={{
-                    fontSize: 13, textTransform: "uppercase", letterSpacing: "0.08em",
-                    color: "#fff", fontWeight: 900, marginBottom: 8,
-                    textAlign: i === 1 ? "center" : "left"
-                  }}
-                >
+                <h4 className={`text-[13px] uppercase tracking-[0.08em] text-white font-black mb-2 ${col.pos === 'mid' ? 'text-center' : ''}`}>
                   {col.label}
                 </h4>
-                <p
-                  style={{
-                    fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5,
-                    textAlign: i === 1 ? "center" : "left"
-                  }}
-                >
+                <p className={`text-[12px] text-white/45 leading-relaxed ${col.pos === 'mid' ? 'text-center' : ''}`}>
                   {col.text}
                 </p>
-
-                {/* Bottom Glow Line */}
-                <div 
-                  className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                />
+                <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
           </div>
         </Card>
 
-        {/* ───────── ROW 2 ───────── */}
-
-        {/* Mindset Card */}
-        <Card className="flex flex-col" style={{ padding: 24, gap: 12, minHeight: 480 }} delay={280}>
+        {/* ROW 2: Mindset, Portrait, Location, Craft */}
+        <Card className="flex flex-col p-6 min-h-[480px] gap-3" delay={280}>
           <SectionTitle>Mindset</SectionTitle>
-
-          <p
-  style={{
-    fontSize: 17,
-    fontWeight: 600,
-    color: "rgba(255,255,255,0.45)",
-    lineHeight: 1.6
-  }}
->
-  <strong style={{ color: "#969696", fontWeight: 700 }}>
-    Building more than software.
-  </strong>{" "}
-  
-  <span style={{ fontWeight: 390, color: "rgba(255,255,255,0.45)" }}>
-    My passions provide the
-  </span>{" "}
-  
-  <strong style={{ color: "#969696", fontWeight: 700 }}>
-    discipline and focus
-  </strong>{" "}
-  
-  <span style={{ fontWeight: 390, color: "rgba(255,255,255,0.45)" }}>
-    I need to grow.
-  </span>
-</p>
-
-          {/* Image carousel — 3 stacked rotating images */}
+          <p className="text-[17px] font-semibold text-white/45 leading-relaxed">
+            <strong className="text-[#969696] font-bold">Building more than software.</strong>{" "}
+            <span className="font-normal">My passions provide the</span>{" "}
+            <strong className="text-[#969696] font-bold">discipline and focus</strong>{" "}
+            <span className="font-normal">I need to grow.</span>
+          </p>
           <ImageCarousel />
-
-          <p
-  style={{
-    fontSize: 17,
-    fontWeight: 600,
-    color: "rgba(255,255,255,0.45)",
-    lineHeight: 1.6,
-    marginTop: 4
-  }}
->
-  <strong style={{ color: "#969696", fontWeight: 700 }}>
-    Mastering body and mind
-  </strong>{" "}
-  
-  <span style={{ fontWeight: 390, color: "rgba(255,255,255,0.45)" }}>
-    is my path to
-  </span>{" "}
-  
-  <strong style={{ color: "#969696", fontWeight: 700 }}>
-    excellence
-  </strong>.
-</p>
+          <p className="text-[17px] font-semibold text-white/45 leading-relaxed mt-1">
+            <strong className="text-[#969696] font-bold">Mastering body and mind</strong>{" "}
+            <span className="font-normal">is my path to</span>{" "}
+            <strong className="text-[#969696] font-bold">excellence</strong>.
+          </p>
         </Card>
 
-        {/* Centre: Portrait (top) + Location (bottom) */}
-        <div className="flex flex-col" style={{ gap: 16 }}>
-
-          {/* Portrait – premium container */}
-          <div
-            className="portrait-card flex-[3]"
-            style={{ minHeight: 345, position: "relative" }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
-              alt="Developer portrait"
-              style={{
-                position: "absolute", inset: 0, width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "top",
-              }}
-            />
-            {/* bottom vignette */}
-            <div
-              style={{
-                position: "absolute", bottom: 0, left: 0, right: 0, height: "35%",
-                background: "linear-gradient(to top, rgba(7,11,20,0.6), transparent)",
-                pointerEvents: "none",
-              }}
-            />
+        <div className="flex flex-col gap-4">
+          <div className="relative flex-3 min-h-[345px] rounded-[18px] overflow-hidden border border-white/30 shadow-[0_0_32px_rgba(124,58,237,0.18),0_8px_32px_rgba(0,0,0,0.5)] transition-all hover:shadow-[0_0_48px_rgba(59,130,246,0.35),0_12px_40px_rgba(0,0,0,0.6)]">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Ankit" className="absolute inset-0 w-full h-full object-cover object-top" />
+            <div className="absolute bottom-0 inset-x-0 h-[35%] bg-linear-to-t from-[#070b14]/60 to-transparent pointer-events-none" />
           </div>
 
-          {/* Location card */}
-          <Card
-            className="relative overflow-hidden flex-1"
-            style={{ minHeight: 118 }}
-            delay={360}
-            noHover
-          >
-            {/* Map background */}
-            <img
-              src="/images/map.webp"
-              alt="Cracow map"
-              style={{
-                position: "absolute", inset: 0, width: "100%", height: "100%",
-                objectFit: "cover", opacity: 0.4,
-                filter: "grayscale(1)"
-              }}
-            />
-            {/* Gradient overlay */}
-            <div 
-              style={{ 
-                position: "absolute", inset: 0, 
-                background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)",
-                zIndex: 5
-              }} 
-            />
-
-            {/* Animated scan line */}
-            <div
-              className="animate-scan-line"
-              style={{
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                width: 2,
-                background: "#a855f7",   // solid purple
-                zIndex: 6,
-                pointerEvents: "none",
-              }}
-            />
-
-            <div
-              className="relative z-10 flex flex-col justify-end h-full"
-              style={{ padding: 18 }}
-            >
-              <h3
-                style={{
-                  fontSize: 28, fontWeight: 900, color: "#ffffff",
-                  textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 1,
-                }}
-              >
+          <Card className="relative flex-1 min-h-[118px] overflow-hidden p-0" noHover delay={360}>
+            <img src="/images/map.webp" alt="Cracow map" className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" />
+            <div className="absolute inset-0 z-5 bg-linear-to-t from-black/85 via-black/20 to-transparent" />
+            <div className="absolute inset-y-0 left-0 w-[2px] bg-purple-500 animate-scan-line z-6 pointer-events-none shadow-[0_0_15px_rgba(168,85,247,0.5)]" />
+            <div className="relative z-10 flex flex-col justify-end h-full p-[18px]">
+              <h3 className="text-[28px] font-black text-white uppercase tracking-[-0.01em] leading-none">
                 Cracow, Poland
               </h3>
-              <p style={{ fontSize: 11, fontFamily: "monospace", color: "rgba(255,255,255,0.45)", marginTop: 4 }}>
+              <p className="text-[11px] font-mono text-white/45 mt-1">
                 50.0647° N, 19.9450° E
               </p>
-              <p
-                style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "#a855f7",
-                  marginTop: 2,
-                  lineHeight: 1,
-                  letterSpacing: "-0.02em"
-                }}
-              >
+              <p className="text-[14px] font-bold text-purple-500 mt-1 leading-none tracking-tight">
                 - GMT+1
               </p>
             </div>
           </Card>
         </div>
 
-        {/* Craft Card */}
-        <Card className="flex flex-col" style={{ padding: 24, gap: 12, minHeight: 480 }} delay={420}>
+        <Card className="flex flex-col p-6 min-h-[480px] gap-3" delay={420}>
           <SectionTitle>Craft</SectionTitle>
-
-          <p style={{ fontSize: 17, fontWeight: 390, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
-            Building scalable <strong style={{ color: "#969696", fontWeight: 700 }}>apps, websites, and automations</strong>.
+          <p className="text-[17px] font-normal text-white/45 leading-relaxed">
+            Building scalable <strong className="text-[#969696] font-bold">apps, websites, and automations</strong>.
+          </p>
+          <p className="text-[17px] font-normal text-white/40 leading-relaxed">
+            I understand what advantages modern tech can provide, helping me advise on solutions a business actually needs.
           </p>
 
-          <p style={{ fontSize: 17, fontWeight: 390, color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>
-            I understand what advantages modern tech can provide, helping me advise on the
-            solutions a business actually needs.
-          </p>
-
-          {/* ── Infinite marquee — FULL WIDTH lane ── */}
-          <div 
-            className="relative overflow-hidden" 
-            style={{ 
-              width: "calc(100% + 48px)",
-              margin: "8px -24px",
-              padding: "16px 0",
-              background: "rgba(0, 0, 0, 0.2)",
-              borderTop: "1px solid rgba(255,255,255,0.03)",
-              borderBottom: "1px solid rgba(255,255,255,0.03)",
-            }}
-          >
-            {/* Fade edges */}
-            <div
-              className="absolute left-0 top-0 bottom-0 z-10 pointer-events-none"
-              style={{ width: 60, background: "linear-gradient(to right, #121214, transparent)" }}
-            />
-            <div
-              className="absolute right-0 top-0 bottom-0 z-10 pointer-events-none"
-              style={{ width: 60, background: "linear-gradient(to left, #121214, transparent)" }}
-            />
-
-            <div className="flex animate-marquee" style={{ gap: 28, width: "max-content" }}>
+          <div className="relative w-[calc(100%+48px)] -mx-6 my-2 py-3 bg-black/30 border-y border-white/10 overflow-hidden">
+            <div className="absolute left-0 inset-y-0 w-20 bg-linear-to-r from-[#121214] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 inset-y-0 w-20 bg-linear-to-l from-[#121214] to-transparent z-10 pointer-events-none" />
+            <div className="flex w-max gap-2 animate-marquee-left hover:paused">
               {marqueeItems.map((tech, i) => (
-                <div
-                  key={`${tech.name}-${i}`}
-                  className="shrink-0 flex items-center"
-                  style={{ gap: 8, cursor: "default" }}
-                >
-                  <span style={{ fontSize: 11 }}>{tech.icon}</span>
-                  <span
-                    style={{
-                      fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)",
-                      textTransform: "uppercase", letterSpacing: "0.15em", whiteSpace: "nowrap",
-                    }}
+                <div key={`${tech.name}-${i}`} className="flex items-center gap-3 px-1">
+                  <span className="text-[12px]" style={{ color: tech.color }}>
+                    {tech.icon}
+                  </span>
+                  <span 
+                    className="text-[11px] font-bold text-white/40 uppercase tracking-widest whitespace-nowrap"
+                    style={{ fontFamily: '"JetBrains Mono", monospace' }}
                   >
                     {tech.name}
                   </span>
@@ -524,19 +308,14 @@ export default function About() {
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p style={{ fontSize: 17, fontWeight: 390, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
-              Active Hackathon competitor &amp; Science Club member. Feel free to invite me to collaborate.
+          <div className="space-y-3">
+            <p className="text-[17px] font-normal text-white/45 leading-relaxed">
+              Active Hackathon competitor & Science Club member. Feel free to invite me to collaborate.
             </p>
-
-            {/* Status badge */}
-            <div className="flex items-center" style={{ gap: 8 }}>
-              <span
-                className="animate-pulse"
-                style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", display: "inline-block" }}
-              />
-              <span style={{ fontSize: 10, color: "#DBDBDB", fontWeight: 500 }}>
-                Open to collaboration &amp; freelance
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] text-[#DBDBDB] font-medium uppercase tracking-wider">
+                Open to collaboration & freelance
               </span>
             </div>
           </div>

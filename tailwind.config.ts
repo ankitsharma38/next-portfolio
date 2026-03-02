@@ -4,9 +4,9 @@ import tailwindcssAnimate from "tailwindcss-animate";
 const config: Config = {
     darkMode: "class",
     content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
   	extend: {
@@ -56,7 +56,30 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+      keyframes: {
+        "marquee-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" }
+        },
+        "scan-line": {
+          "0%": { left: "0%" },
+          "100%": { left: "100%" }
+        },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" }
+        }
+      },
+      animation: {
+        "marquee-left": "marquee-left 18s linear infinite",
+        "scan-line": "scan-line 3s linear infinite",
+        "pulse-slow": "pulse-slow 3s ease-in-out infinite"
+      },
+      boxShadow: {
+        'about-card': '0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02)',
+        'about-card-hover': '0 10px 40px -5px rgba(59, 130, 246, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05)',
+      }
   	}
   },
   plugins: [tailwindcssAnimate],
