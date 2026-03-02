@@ -260,7 +260,7 @@ export default function About() {
           </div>
 
           {/* Card Stack Container */}
-          <div className="absolute inset-0 flex items-end justify-center px-2 pb-0 z-10" style={{ gap: 8 }}>
+          <div className="absolute inset-0 flex items-end justify-center px-0 pb-0 z-10">
             {[
               {
                 label: "Science Club",
@@ -280,13 +280,17 @@ export default function About() {
             ].map((col, i) => (
               <div
                 key={i}
-                className={`education-subcard ${col.variant} relative bg-[#171719] border border-white/5 rounded-xl p-4 flex-1 cursor-default`}
-                style={{ minWidth: "33%" }}
+                className={`education-subcard ${col.variant} relative bg-[#171719] border border-white/5 rounded-xl p-5 flex-1 cursor-default`}
+                style={{ 
+                  minWidth: "38%", 
+                  marginLeft: i === 0 ? 0 : "-8%",
+                  zIndex: i === 1 ? 20 : 10 
+                }}
               >
                 <h4
                   style={{
-                    fontSize: 10, textTransform: "uppercase", letterSpacing: "0.1em",
-                    color: "#fff", fontWeight: 800, marginBottom: 6,
+                    fontSize: 13, textTransform: "uppercase", letterSpacing: "0.08em",
+                    color: "#fff", fontWeight: 900, marginBottom: 8,
                     textAlign: i === 1 ? "center" : "left"
                   }}
                 >
@@ -294,7 +298,7 @@ export default function About() {
                 </h4>
                 <p
                   style={{
-                    fontSize: 9, color: "rgba(255,255,255,0.45)", lineHeight: 1.4,
+                    fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5,
                     textAlign: i === 1 ? "center" : "left"
                   }}
                 >
