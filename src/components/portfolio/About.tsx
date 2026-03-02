@@ -58,7 +58,7 @@ function ImageCarousel() {
             <div
               className="relative w-full h-full overflow-hidden"
               style={{ 
-                borderRadius: 16, 
+                borderRadius: 10, 
                 border: "1px solid rgba(124,58,237,0.3)",
                 boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
               }}
@@ -280,7 +280,7 @@ export default function About() {
             ].map((col, i) => (
               <div
                 key={i}
-                className={`education-subcard ${col.variant} relative bg-[#171719] border border-white/5 rounded-xl p-5 flex-1 cursor-default`}
+                className={`education-subcard ${col.variant} relative bg-[#171719] border border-white/5 rounded-lg p-5 flex-1 cursor-default`}
                 style={{ 
                   minWidth: "38%", 
                   marginLeft: i === 0 ? 0 : "-8%",
@@ -406,41 +406,63 @@ export default function About() {
           >
             {/* Map background */}
             <img
-              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=700&q=80"
+              src="/images/map.webp"
               alt="Cracow map"
               style={{
                 position: "absolute", inset: 0, width: "100%", height: "100%",
-                objectFit: "cover", opacity: 0.2,
+                objectFit: "cover", opacity: 0.4,
+                filter: "grayscale(1)"
               }}
+            />
+            {/* Gradient overlay */}
+            <div 
+              style={{ 
+                position: "absolute", inset: 0, 
+                background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)",
+                zIndex: 5
+              }} 
             />
 
             {/* Animated scan line */}
             <div
               className="animate-scan-line"
               style={{
-                position: "absolute", top: 0, bottom: 0, width: 1,
-                background: "linear-gradient(to bottom, transparent, rgba(124,58,237,0.9), transparent)",
-                zIndex: 20, pointerEvents: "none",
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                width: 2,
+                background: "#a855f7",   // solid purple
+                zIndex: 6,
+                pointerEvents: "none",
               }}
             />
 
             <div
               className="relative z-10 flex flex-col justify-end h-full"
-              style={{ padding: 16 }}
+              style={{ padding: 18 }}
             >
               <h3
                 style={{
-                  fontSize: 20, fontWeight: 900, color: "#ffffff",
-                  textTransform: "uppercase", letterSpacing: "0.04em", lineHeight: 1,
+                  fontSize: 28, fontWeight: 900, color: "#ffffff",
+                  textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 1,
                 }}
               >
                 Cracow, Poland
               </h3>
-              <p style={{ fontSize: 9, fontFamily: "monospace", color: "rgba(255,255,255,0.45)", marginTop: 4 }}>
+              <p style={{ fontSize: 11, fontFamily: "monospace", color: "rgba(255,255,255,0.45)", marginTop: 4 }}>
                 50.0647° N, 19.9450° E
               </p>
-              <p style={{ fontSize: 9, fontFamily: "monospace", color: "rgba(255,255,255,0.30)", marginTop: 1 }}>
-                − GMT +1
+              <p
+                style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: "#a855f7",
+                  marginTop: 2,
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em"
+                }}
+              >
+                - GMT+1
               </p>
             </div>
           </Card>
