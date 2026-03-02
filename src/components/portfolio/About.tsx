@@ -207,7 +207,7 @@ export default function About() {
                   filter: "drop-shadow(0 0 15px rgba(255,255,255,0.35))",
                 }}
               >
-                PAWEŁ
+                ANKIT
               </div>
               <div
                 style={{
@@ -217,7 +217,7 @@ export default function About() {
                   filter: "drop-shadow(0 0 15px rgba(255,255,255,0.35))",
                 }}
               >
-                SZOSTAK
+                SHARMA
               </div>
             </div>
             <div className="flex flex-col items-center" style={{ gap: 14 }}>
