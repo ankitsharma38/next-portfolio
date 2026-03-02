@@ -217,19 +217,21 @@ export default function About() {
               <div
                 key={i}
                 className={`
-                  relative flex-1 bg-[#171719] border border-white/5 rounded-lg p-5 cursor-default transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] h-[200px]
-                  translate-y-[125px]
+                  relative flex-none bg-[#171719] border border-white/20 rounded-lg p-5 cursor-default transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] h-[200px]
+                  ${col.pos === 'mid' ? 'translate-y-[110px] z-20 rotate-0 hover:translate-y-[78px] hover:scale-[1.02]' : 'translate-y-[130px] z-10'}
                   ${col.pos === 'left' ? '-rotate-1 hover:translate-y-[85px] hover:-rotate-3' : ''}
-                  ${col.pos === 'mid' ? 'z-20 rotate-0 hover:translate-y-[78px] hover:scale-[1.02]' : 'z-10'}
                   ${col.pos === 'right' ? 'rotate-1 hover:translate-y-[85px] hover:rotate-3' : ''}
                   hover:z-30 hover:border-purple-500/45 hover:shadow-[0_0_40px_rgba(124,58,237,0.25)]
                 `}
-                style={{ minWidth: "38%", marginLeft: i === 0 ? 0 : "-8%" }}
+                style={{ 
+                  width: col.pos === 'mid' ? "40%" : "38%", 
+                  marginLeft: i === 0 ? 0 : "-10%" 
+                }}
               >
-                <h4 className={`text-[13px] uppercase tracking-[0.08em] text-white font-black mb-2 ${col.pos === 'mid' ? 'text-center' : ''}`}>
+                <h4 className={`text-[13px] uppercase tracking-[0.08em] text-white font-black mb-2 ${col.pos === 'mid' ? 'text-center' : col.pos === 'right' ? 'text-right' : ''}`}>
                   {col.label}
                 </h4>
-                <p className={`text-[12px] text-white/45 leading-relaxed ${col.pos === 'mid' ? 'text-center' : ''}`}>
+                <p className={`text-[12px] text-white/45 leading-relaxed ${col.pos === 'mid' ? 'text-center' : col.pos === 'right' ? 'text-right' : ''}`}>
                   {col.text}
                 </p>
                 <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -261,7 +263,7 @@ export default function About() {
             <div className="absolute bottom-0 inset-x-0 h-[35%] bg-linear-to-t from-[#070b14]/60 to-transparent pointer-events-none" />
           </div>
 
-          <Card className="relative flex-1 min-h-[118px] overflow-hidden p-0" noHover delay={360}>
+          <Card className="relative flex-1 min-h-[140px] overflow-hidden p-0" noHover delay={360}>
             <img src="/images/map.webp" alt="Cracow map" className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" />
             <div className="absolute inset-0 z-5 bg-linear-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute inset-y-0 left-0 w-[2px] bg-purple-500 animate-scan-line z-6 pointer-events-none shadow-[0_0_15px_rgba(168,85,247,0.5)]" />
@@ -269,10 +271,10 @@ export default function About() {
               <h3 className="text-[28px] font-black text-white uppercase tracking-[-0.01em] leading-none">
                 Cracow, Poland
               </h3>
-              <p className="text-[11px] font-mono text-white/45 mt-1">
+              <p className="text-[11px] font-mono text-white/45 mt-0">
                 50.0647° N, 19.9450° E
               </p>
-              <p className="text-[14px] font-bold text-purple-500 mt-1 leading-none tracking-tight">
+              <p className="text-[14px] font-bold text-purple-500 -mb-2 leading-none tracking-tight">
                 - GMT+1
               </p>
             </div>

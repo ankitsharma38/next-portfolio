@@ -55,10 +55,10 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-[var(--muted)]">
-            <span>© {currentYear} Paweł Szostak</span>
+            <span>© {currentYear} Ankit Sharma</span>
             <span className="text-violet-500">•</span>
             <span className="flex items-center gap-1">
-              Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> in Kraków
+              Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> in India
             </span>
           </div>
         </div>
