@@ -79,12 +79,12 @@ function SkillBar({ skill, delay }: SkillBarProps) {
   return (
     <div ref={barRef} className="mb-4">
       <div className="flex justify-between items-center mb-1.5">
-        <span className="text-sm font-medium text-[var(--foreground)]">{skill.name}</span>
-        <span className="text-xs text-[var(--muted)]">{skill.level}%</span>
+        <span className="text-sm font-medium text-foreground">{skill.name}</span>
+        <span className="text-xs text-muted">{skill.level}%</span>
       </div>
-      <div className="h-2 bg-[var(--card)] rounded-full overflow-hidden border border-[var(--card-border)]">
+      <div className="h-2 bg-card rounded-full overflow-hidden border border-(--card-border)">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-violet-600 to-purple-500 transition-all duration-1000 ease-out"
+          className="h-full rounded-full bg-linear-to-r from-violet-600 to-purple-500 transition-all duration-1000 ease-out"
           style={{
             width: isVisible ? `${skill.level}%` : "0%",
             transitionDelay: `${delay}ms`,
@@ -124,7 +124,7 @@ function SkillCard({ category, index }: SkillCardProps) {
   return (
     <div
       ref={cardRef}
-      className="bg-gradient-to-br from-[var(--card)] to-[var(--card-border)] border border-[var(--card-border)] backdrop-blur-md rounded-2xl p-6 card-hover"
+      className="bg-linear-to-br from-card to-(--card-border) border border-(--card-border) backdrop-blur-md rounded-2xl p-6 card-hover"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(20px)",
@@ -134,7 +134,7 @@ function SkillCard({ category, index }: SkillCardProps) {
       {/* Category Header */}
       <div className="flex items-center gap-3 mb-6">
         <span className="text-2xl">{category.icon}</span>
-        <h3 className="text-lg font-bold text-[var(--foreground)]">{category.name}</h3>
+        <h3 className="text-lg font-bold text-foreground">{category.name}</h3>
       </div>
 
       {/* Skills */}
@@ -147,16 +147,30 @@ function SkillCard({ category, index }: SkillCardProps) {
   );
 }
 
+import SkillsGlobe from "./SkillsGlobe";
+
 export default function Skills() {
   return (
-    <section id="skills" className="pb-32 pt-16 px-4 max-w-5xl mx-auto">
+    <section id="skills" className="pb-32 pt-16 px-4 max-w-6xl mx-auto overflow-hidden">
       {/* Section Title */}
       <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-        <span className="text-gradient-shimmer">Skills</span>
+        <span className="text-gradient-shimmer">My Tech Stack</span>
       </h2>
-      <p className="text-center text-[var(--muted)] mb-12 max-w-2xl mx-auto">
-        Technologies and tools I work with to bring ideas to life.
+      <p className="text-center text-muted mb-4 max-w-2xl mx-auto">
+        A visual representation of the technologies I've mastered to build high-performance, modern applications.
       </p>
+
+      {/* 3D Interactive Globe */}
+      <div className="mb-12">
+        <SkillsGlobe />
+      </div>
+
+      <div className="text-center mb-12">
+        <h3 className="text-2xl font-bold text-gradient-shimmer mb-4">Detailed Proficiency</h3>
+        <p className="text-muted max-w-xl mx-auto">
+          Here's a breakdown of my expertise across different domains of software engineering.
+        </p>
+      </div>
 
       {/* Skills Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -167,7 +181,7 @@ export default function Skills() {
 
       {/* Additional Skills Tags */}
       <div className="mt-12 text-center">
-        <h4 className="text-sm font-semibold text-[var(--muted)] mb-4 uppercase tracking-wider">
+        <h4 className="text-sm font-semibold text-muted mb-4 uppercase tracking-wider">
           Also experienced with
         </h4>
         <div className="flex flex-wrap gap-2 justify-center max-w-3xl mx-auto">
