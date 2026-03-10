@@ -8,10 +8,8 @@ export default function Background() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (backgroundRef.current) {
-        const x = (e.clientX / window.innerWidth) * 100;
-        const y = (e.clientY / window.innerHeight) * 100;
-        backgroundRef.current.style.setProperty("--mouse-x", `${x}%`);
-        backgroundRef.current.style.setProperty("--mouse-y", `${y}%`);
+        backgroundRef.current.style.setProperty("--mouse-x", `${e.clientX}px`);
+        backgroundRef.current.style.setProperty("--mouse-y", `${e.clientY}px`);
       }
     };
 
@@ -20,36 +18,41 @@ export default function Background() {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-50 h-full w-full transition-colors duration-500 ease-in-out pointer-events-none">
+    <div
+      ref={backgroundRef}
+      className="fixed inset-0 -z-50 h-full w-full transition-colors duration-500 ease-in-out pointer-events-none"
+    >
       {/* Base background */}
       <div
         className="absolute inset-0"
         style={{ backgroundColor: "rgb(10, 10, 15)" }}
       />
 
-
-
-      {/* Dot pattern base */}
+      {/* Dot pattern base - subtle white dots */}
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: "radial-gradient(rgb(255, 255, 255) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
-          opacity: 0.05,
         }}
       />
 
-
-
-      {/* Mouse-following dot highlight */}
+      {/* Mouse-following soft glow */}
       <div
-        className="absolute inset-0 transition-opacity duration-500"
+        className="absolute inset-0"
         style={{
-          backgroundImage: "radial-gradient(rgb(255, 255, 255) 1px, transparent 1px)",
+          background: `radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.12), transparent 80%)`,
+        }}
+      />
+
+      {/* Mouse-following dot highlight - glowing purple dots */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: "radial-gradient(rgb(139, 92, 246) 1.5px, transparent 1.5px)",
           backgroundSize: "32px 32px",
-          opacity: 0.4,
-          maskImage: "radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), black, transparent)",
-          WebkitMaskImage: "radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), black, transparent)",
+          maskImage: "radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%)",
         }}
       />
 
