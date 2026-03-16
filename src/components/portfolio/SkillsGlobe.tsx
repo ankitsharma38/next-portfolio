@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { useScroll, motion } from "framer-motion";
+import { useScroll, motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 const skillIcons: Record<string, string> = {
@@ -48,6 +48,8 @@ const icons = [
 
 const SkillsGlobe = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const gatherProgress = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const rotationStart = useRef({ x: 0, y: 0 });
@@ -80,6 +82,9 @@ const SkillsGlobe = () => {
         baseX: radius * Math.cos(theta) * Math.sin(phi),
         baseY: radius * Math.sin(theta) * Math.sin(phi),
         baseZ: radius * Math.cos(phi),
+        randomX: (Math.random() - 0.5) * 2000,
+        randomY: (Math.random() - 0.5) * 2000,
+        randomZ: (Math.random() - 0.5) * 2000,
       };
     });
   }, []);
@@ -87,6 +92,11 @@ const SkillsGlobe = () => {
   useEffect(() => {
     let frame: number;
     const animate = () => {
+      // Gather animation progress
+      if (isInView && gatherProgress.current < 1) {
+          gatherProgress.current = Math.min(1, gatherProgress.current + 0.015);
+      }
+
       if (!isDragging) {
         setCurrentRotation((prev) => ({
           x: prev.x + autoRotateSpeed.current + velocity.current.x,
@@ -99,12 +109,17 @@ const SkillsGlobe = () => {
         if (Math.abs(autoRotateSpeed.current) > 0.005) {
             autoRotateSpeed.current *= 0.98;
         }
+      } else {
+        // Just to ensure gather progress continues animating if user drags early
+        if (isInView && gatherProgress.current < 1) {
+          setCurrentRotation(prev => ({...prev}));
+        }
       }
       frame = requestAnimationFrame(animate);
     };
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, [isDragging]);
+  }, [isDragging, isInView]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -159,10 +174,11 @@ const SkillsGlobe = () => {
     >
       {/* 3D Wireframe Mesh Backdrop */}
       <motion.div 
-        className="absolute w-[500px] h-[500px] opacity-20 pointer-events-none"
+        className="absolute w-[500px] h-[500px] pointer-events-none"
         style={{
           rotateX: currentRotation.x * 50,
           rotateY: currentRotation.y * 50,
+          opacity: gatherProgress.current * 0.2,
         }}
       >
         <svg viewBox="0 0 100 100" className="w-full h-full text-violet-500">
@@ -207,23 +223,31 @@ const SkillsGlobe = () => {
         const y2 = point.baseY * cosX - z1 * sinX;
         const z2 = point.baseY * sinX + z1 * cosX;
 
-        const scale = (z2 + 500) / 500;
-        const opacity = (z2 + 250) / 500 + 0.1;
+        // Smoothly interpolate positions as it enters view
+        const p = gatherProgress.current;
+        const easedP = 1 - Math.pow(1 - p, 4); // ease out quartic
+
+        const finalX = point.randomX + (x1 - point.randomX) * easedP;
+        const finalY = point.randomY + (y2 - point.randomY) * easedP;
+        const finalZ = point.randomZ + (z2 - point.randomZ) * easedP;
+
+        const scale = (finalZ + 500) / 500;
+        const opacity = (finalZ + 250) / 500 + 0.1;
         
         // Only show name when the item is in the foreground (front of the globe)
-        const isFrontend = z2 > 100;
-        const nameOpacity = Math.max(0, (z2 - 100) / 120);
+        const isFrontend = finalZ > 100;
+        const nameOpacity = Math.max(0, (finalZ - 100) / 120);
 
         return (
           <motion.div
             key={point.name}
             className="absolute flex flex-col items-center justify-center"
             style={{
-              x: x1,
-              y: y2,
+              x: finalX,
+              y: finalY,
               scale: Math.max(0.4, scale),
-              opacity: Math.max(0.05, opacity),
-              zIndex: Math.round(z2 + 500),
+              opacity: Math.max(0.05, opacity) * easedP, // Fade in from arbitrary positions
+              zIndex: Math.round(finalZ + 500),
             }}
           >
             <div 
