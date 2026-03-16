@@ -57,7 +57,7 @@ export default function Hero() {
             style={{ color: "var(--foreground)" }}
           >
             Hi, I'm{" "}
-            <span className="text-gradient-shimmer">Paweł Szostak</span>
+            <span className="text-gradient-shimmer">Stranger</span>
           </h1>
 
           {/* Tagline */}
@@ -83,7 +83,7 @@ export default function Hero() {
                 className="text-xs text-center"
                 style={{ color: "var(--muted)", opacity: 0.5 }}
               >
-                Ask me anything about Paweł...
+                Ask me anything about Stranger...
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Hero() {
                 >
                   <textarea
                     rows={1}
-                    placeholder="Ask anything about Paweł..."
+                    placeholder="Ask anything about Stranger..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     className="flex-1 bg-transparent text-sm outline-none resize-none overflow-hidden py-2 leading-tight placeholder:opacity-50"
