@@ -13,13 +13,37 @@ const skillIcons: Record<string, string> = {
   "Figma": "/skills/figma.png",
   "Git": "/skills/github-64.png",
   "PostgreSQL": "/skills/sql-server.png",
+  "Next.js": "/skills/next.js-96.png",
+  "TypeScript": "/skills/typescript-100.png",
+  "Tailwind": "/skills/tailwind-css-96.png",
+  "AWS": "/skills/aws-96.png",
+  "GraphQL": "/skills/graphql-96.png",
+  "NestJS": "/skills/nestjs-96.png",
+  "Linux": "/skills/linux-96.png",
+};
+
+const skillColors: Record<string, string> = {
+  "React": "#61DAFB",
+  "Node.js": "#339933",
+  "Python": "#3776AB",
+  "MongoDB": "#47A248",
+  "Docker": "#2496ED",
+  "Figma": "#F24E1E",
+  "Git": "#F05032",
+  "PostgreSQL": "#336791",
+  "Next.js": "#000000",
+  "TypeScript": "#3178C6",
+  "Tailwind": "#38B2AC",
+  "AWS": "#FF9900",
+  "GraphQL": "#E10098",
+  "NestJS": "#E0234E",
+  "Linux": "#FCC624",
 };
 
 const icons = [
   "React", "Node.js", "Python", "MongoDB", "Docker", "Figma", 
   "Git", "PostgreSQL", "Next.js", "TypeScript", "Tailwind", "AWS", 
-  "GraphQL", "NestJS", "Redis", "Firebase", "Linux", "Expo", 
-  "TensorFlow", "Prisma", "Supabase", "Vercel", "Jest", "Go"
+  "GraphQL", "NestJS", "Linux", 
 ];
 
 const SkillsGlobe = () => {
@@ -33,6 +57,7 @@ const SkillsGlobe = () => {
   const autoRotateSpeed = useRef(0.005);
   const lastScrollY = useRef(0);
   const [currentRotation, setCurrentRotation] = useState({ x: 0, y: 0 });
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   const { scrollY } = useScroll();
 
@@ -201,17 +226,21 @@ const SkillsGlobe = () => {
               zIndex: Math.round(z2 + 500),
             }}
           >
-            <div className={`relative flex flex-col items-center group transition-all duration-500`}>
+            <div 
+                className={`relative flex flex-col items-center group transition-all duration-500 cursor-pointer`}
+                onMouseEnter={() => setHoveredSkill(point.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+            >
                 {/* Icon Container */}
                 <div className={`
-                    w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center p-1
-                    transition-all duration-500
+                    w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center p-1
+                    transition-all duration-500 group-hover:!scale-[1.8] group-hover:!opacity-100
                     ${isFrontend 
                         ? "scale-110 opacity-100" 
                         : "opacity-40"}
                 `}>
                     {skillIcons[point.name] ? (
-                        <div className="relative w-full h-full drop-shadow-[0_0_15px_rgba(139,92,246,0.3)]">
+                        <div className="relative w-full h-full drop-shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]">
                             <Image 
                                 src={skillIcons[point.name]} 
                                 alt={point.name}
@@ -220,7 +249,7 @@ const SkillsGlobe = () => {
                             />
                         </div>
                     ) : (
-                        <span className="text-xl font-bold text-white/60">
+                        <span className="text-xl font-bold text-white/60 group-hover:text-white">
                             {point.name.charAt(0)}
                         </span>
                     )}
@@ -228,8 +257,11 @@ const SkillsGlobe = () => {
 
                 {/* Conditional Name Display - Only if in the front */}
                 <motion.span 
-                    className="mt-0.5 whitespace-nowrap text-[10px] font-bold tracking-widest uppercase text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                    style={{ opacity: nameOpacity }}
+                    className="mt-2 whitespace-nowrap text-[9px] font-medium tracking-widest uppercase text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] transition-all duration-300 group-hover:!opacity-100 group-hover:scale-[1.2] origin-top px-2.5 py-0.5 rounded-full group-hover:drop-shadow-none group-hover:shadow-lg"
+                    style={{ 
+                        opacity: nameOpacity,
+                        backgroundColor: hoveredSkill === point.name ? (skillColors[point.name] || '#4B5563') : 'transparent',
+                    }}
                 >
                     {point.name}
                 </motion.span>
