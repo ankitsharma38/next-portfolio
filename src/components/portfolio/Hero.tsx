@@ -29,7 +29,7 @@ export default function Hero() {
       style={{ scrollMarginTop: "120px", paddingTop: "6rem", paddingBottom: "8rem" }}
     >
       {/* Top gradient fade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-3xl mx-auto">
         {/* Avatar and Title */}
@@ -39,11 +39,11 @@ export default function Hero() {
             <div className="relative flex items-center justify-center z-0">
               {/* Glow effect */}
               <div
-                className="absolute w-32 h-32 sm:w-44 sm:h-44 rounded-full bg-violet-600/10 blur-[35px] -z-10 animate-pulse-glow"
+                className="absolute w-32 h-32 sm:w-44 sm:h-44 rounded-full bg-accent/10 blur-[35px] -z-10 animate-pulse-glow"
               />
               {/* Avatar container */}
               <div className="relative w-36 h-36 sm:w-48 sm:h-48 flex items-center justify-center">
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-600/20 to-purple-600/20 border border-violet-500/20 flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-accent/10 to-accent/20 border border-accent/20 flex items-center justify-center overflow-hidden glass">
                   {/* Avatar placeholder with initials */}
                   <span className="text-4xl sm:text-5xl font-bold text-gradient-shimmer">PS</span>
                 </div>
@@ -71,8 +71,8 @@ export default function Hero() {
 
         {/* AI Chat Interface Card */}
         <div
-          className="mt-8 bg-white/2 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl shadow-black/20 overflow-hidden"
-          style={{ opacity: 1 }}
+          className="mt-8 backdrop-blur-xl rounded-3xl border shadow-2xl overflow-hidden glass"
+          style={{ borderColor: "var(--card-border)", boxShadow: "var(--shadow-elevation-high)" }}
         >
           {/* Chat Messages Area */}
           <div
@@ -99,7 +99,7 @@ export default function Hero() {
                 {suggestions.map((suggestion) => (
                   <button
                     key={suggestion}
-                    className="text-xs rounded-full border px-3 py-1.5 transition-transform disabled:opacity-50 hover:border-violet-500 hover:text-white active:scale-95 cursor-pointer"
+                    className="text-xs rounded-full border px-3 py-1.5 transition-transform disabled:opacity-50 hover:border-accent hover:text-white active:scale-95 cursor-pointer"
                     style={{
                       backgroundColor: "var(--card)",
                       borderColor: "var(--card-border)",
@@ -147,7 +147,8 @@ export default function Hero() {
         <div className="flex justify-center mt-8">
           <button
             onClick={scrollToAbout}
-            className="flex flex-col items-center gap-1 text-white/30 hover:text-white/50 transition-colors cursor-pointer animate-bounce-subtle"
+            className="flex flex-col items-center gap-1 transition-colors cursor-pointer animate-bounce-subtle"
+            style={{ color: "var(--muted)", opacity: 0.4 }}
           >
             <span className="text-xs">Scroll to explore</span>
             <ChevronDown className="w-4 h-4" />

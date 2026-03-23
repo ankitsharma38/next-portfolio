@@ -60,19 +60,15 @@ function SkillBar({ skill, delay }: SkillBarProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+    const observer = new IntersectionObserver(entry => {
+        if (entry[0].isIntersecting) {
           setTimeout(() => setIsVisible(true), delay);
         }
       },
       { threshold: 0.1 }
     );
 
-    if (barRef.current) {
-      observer.observe(barRef.current);
-    }
-
+    if (barRef.current) observer.observe(barRef.current);
     return () => observer.disconnect();
   }, [delay]);
 
@@ -82,12 +78,14 @@ function SkillBar({ skill, delay }: SkillBarProps) {
         <span className="text-sm font-medium text-foreground">{skill.name}</span>
         <span className="text-xs text-muted">{skill.level}%</span>
       </div>
-      <div className="h-2 bg-card rounded-full overflow-hidden border border-(--card-border)">
+      <div className="h-2 rounded-full overflow-hidden border" style={{ backgroundColor: 'var(--card)', borderColor: 'var(--card-border)' }}>
         <div
-          className="h-full rounded-full bg-linear-to-r from-violet-600 to-purple-500 transition-all duration-1000 ease-out"
+          className="h-full rounded-full transition-all duration-1000 ease-out"
           style={{
             width: isVisible ? `${skill.level}%` : "0%",
             transitionDelay: `${delay}ms`,
+            background: 'linear-gradient(90deg, var(--accent), var(--accent-foreground))',
+            opacity: 0.8
           }}
         />
       </div>
@@ -105,30 +103,28 @@ function SkillCard({ category, index }: SkillCardProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+    const observer = new IntersectionObserver(entry => {
+        if (entry[0].isIntersecting) {
           setTimeout(() => setIsVisible(true), index * 200);
         }
       },
       { threshold: 0.1 }
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
+    if (cardRef.current) observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, [index]);
 
   return (
     <div
       ref={cardRef}
-      className="bg-linear-to-br from-card to-(--card-border) border border-(--card-border) backdrop-blur-md rounded-2xl p-6 card-hover"
+      className="border backdrop-blur-md rounded-2xl p-6 card-hover"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(20px)",
         transition: "all 0.6s ease-out",
+        backgroundColor: 'var(--card)',
+        borderColor: 'var(--card-border)'
       }}
     >
       {/* Category Header */}

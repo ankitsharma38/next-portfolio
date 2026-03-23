@@ -82,24 +82,26 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(30px)",
         transition: "all 0.6s ease-out",
+        backgroundColor: 'var(--card)',
+        borderColor: 'var(--card-border)',
       }}
     >
       {/* Project Image */}
       <div className={`relative overflow-hidden ${project.featured ? "h-64 md:h-80" : "h-48"}`}>
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/30 to-purple-600/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-6xl font-bold text-white/20">{project.title.charAt(0)}</div>
+          <div className="text-6xl font-bold" style={{ color: 'var(--foreground)', opacity: 0.1 }}>{project.title.charAt(0)}</div>
         </div>
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Project Content */}
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-[var(--foreground)] group-hover:text-violet-400 transition-colors">
+        <h3 className="text-xl font-bold mb-2 transition-colors" style={{ color: 'var(--foreground)' }}>
           {project.title}
         </h3>
-        <p className="text-sm text-[var(--muted)] mb-4 line-clamp-2">
+        <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--muted)' }}>
           {project.description}
         </p>
 
@@ -108,7 +110,8 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-1 rounded-full bg-violet-600/10 border border-violet-500/20 text-violet-400"
+              className="text-xs px-2 py-1 rounded-full bg-accent/10 border text-accent"
+              style={{ borderColor: 'var(--accent)', opacity: 0.8 }}
             >
               {tag}
             </span>
@@ -116,11 +119,12 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Links */}
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {project.github && (
             <a
               href={project.github}
-              className="flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+              className="flex items-center gap-1.5 text-sm transition-colors hover:text-accent"
+              style={{ color: 'var(--muted)' }}
             >
               <Github className="w-4 h-4" />
               <span>Code</span>
@@ -129,7 +133,8 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           {project.demo && (
             <a
               href={project.demo}
-              className="flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+              className="flex items-center gap-1.5 text-sm transition-colors hover:text-accent"
+              style={{ color: 'var(--muted)' }}
             >
               <ExternalLink className="w-4 h-4" />
               <span>Demo</span>

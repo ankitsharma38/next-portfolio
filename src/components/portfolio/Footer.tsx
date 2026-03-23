@@ -16,14 +16,14 @@ export default function Footer() {
     <section id="other" className="pb-16 pt-16 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mb-12" />
+        <div className="h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent mb-12" />
 
         {/* Contact Section */}
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">
             <span className="text-gradient-shimmer">Let's Connect</span>
           </h2>
-          <p className="text-[var(--muted)] max-w-md mx-auto mb-6">
+          <p className="max-w-md mx-auto mb-6" style={{ color: 'var(--muted)' }}>
             I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
           </p>
 
@@ -43,20 +43,20 @@ export default function Footer() {
             <a
               key={link.name}
               href={link.href}
-              className="w-12 h-12 rounded-full glass-strong flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-violet-500/30 group"
-              style={{ boxShadow: "var(--shadow-elevation-low)" }}
+              className="w-12 h-12 rounded-full glass-strong flex items-center justify-center transition-all duration-300 hover:scale-110 group border-accent/10"
+              style={{ boxShadow: "var(--shadow-elevation-low)", borderColor: 'var(--card-border)' }}
               aria-label={link.name}
             >
-              <link.icon className="w-5 h-5 text-[var(--muted)] group-hover:text-violet-400 transition-colors" />
+              <link.icon className="w-5 h-5 transition-colors group-hover:text-accent" style={{ color: 'var(--muted)' }} />
             </a>
           ))}
         </div>
 
         {/* Footer Bottom */}
         <div className="text-center">
-          <div className="flex items-center justify-center gap-2 text-sm text-[var(--muted)]">
+          <div className="flex items-center justify-center gap-2 text-sm" style={{ color: 'var(--muted)' }}>
             <span>© {currentYear} Ankit Sharma</span>
-            <span className="text-violet-500">•</span>
+            <span className="text-accent">•</span>
             <span className="flex items-center gap-1">
               Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> in India
             </span>

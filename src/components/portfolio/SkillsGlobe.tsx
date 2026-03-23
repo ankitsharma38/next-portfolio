@@ -181,7 +181,7 @@ const SkillsGlobe = () => {
           opacity: gatherProgress.current * 0.2,
         }}
       >
-        <svg viewBox="0 0 100 100" className="w-full h-full text-violet-500">
+        <svg viewBox="0 0 100 100" className="w-full h-full" style={{ color: 'var(--accent)' }}>
           <defs>
             <radialGradient id="ringGrad">
               <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" />
@@ -210,7 +210,7 @@ const SkillsGlobe = () => {
       </motion.div>
 
       {/* Decorative inner glow */}
-      <div className="absolute w-[400px] h-[400px] rounded-full bg-violet-600/5 blur-[80px] pointer-events-none" />
+      <div className="absolute w-[400px] h-[400px] rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--accent)', opacity: 0.05 }} />
 
       {points.map((point) => {
         const cosY = Math.cos(currentRotation.y);
@@ -264,7 +264,7 @@ const SkillsGlobe = () => {
                         : "opacity-40"}
                 `}>
                     {skillIcons[point.name] ? (
-                        <div className="relative w-full h-full drop-shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]">
+                        <div className="relative w-full h-full group-hover:drop-shadow-[0_0_20px_var(--accent)]" style={{ filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.1))' }}>
                             <Image 
                                 src={skillIcons[point.name]} 
                                 alt={point.name}
@@ -273,7 +273,7 @@ const SkillsGlobe = () => {
                             />
                         </div>
                     ) : (
-                        <span className="text-xl font-bold text-white/60 group-hover:text-white">
+                        <span className="text-xl font-bold group-hover:text-accent" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
                             {point.name.charAt(0)}
                         </span>
                     )}
@@ -281,10 +281,12 @@ const SkillsGlobe = () => {
 
                 {/* Conditional Name Display - Only if in the front */}
                 <motion.span 
-                    className="mt-2 whitespace-nowrap text-[9px] font-medium tracking-widest uppercase text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] transition-all duration-300 group-hover:!opacity-100 group-hover:scale-[1.2] origin-top px-2.5 py-0.5 rounded-full group-hover:drop-shadow-none group-hover:shadow-lg"
+                    className="mt-2 whitespace-nowrap text-[9px] font-medium tracking-widest uppercase transition-all duration-300 group-hover:!opacity-100 group-hover:scale-[1.2] origin-top px-2.5 py-0.5 rounded-full group-hover:shadow-lg"
                     style={{ 
                         opacity: nameOpacity,
                         backgroundColor: hoveredSkill === point.name ? (skillColors[point.name] || '#4B5563') : 'transparent',
+                        color: hoveredSkill === point.name ? 'white' : 'var(--foreground)',
+                        boxShadow: hoveredSkill === point.name ? 'var(--shadow-elevation-medium)' : 'none'
                     }}
                 >
                     {point.name}

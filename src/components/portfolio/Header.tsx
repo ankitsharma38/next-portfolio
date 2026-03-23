@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Moon, Sun, Calendar, Menu, X } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -14,7 +15,12 @@ const navItems = [
 export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleNavClick = (href: string) => {
     setActiveSection(href.replace("#", ""));
@@ -24,6 +30,22 @@ export default function Header() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const isDark = theme === "dark";
+
+  if (!mounted) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 py-6">
+        <nav className="max-w-350 mx-auto px-6 md:px-8 lg:px-12">
+          <div className="flex items-center justify-between">
+            <div className="w-14 h-14 rounded-full glass-strong animate-pulse" />
+            <div className="h-14 px-8 glass-strong rounded-full w-64 animate-pulse" />
+            <div className="w-32 h-14 rounded-full glass-strong animate-pulse" />
+          </div>
+        </nav>
+      </header>
+    );
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-6">
@@ -35,7 +57,7 @@ export default function Header() {
             <button
               className="relative w-14 h-14 rounded-full glass-strong flex items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer"
               style={{ boxShadow: "var(--shadow-elevation-low)" }}
-              onClick={() => setIsDark(!isDark)}
+              onClick={() => setTheme(isDark ? "light" : "dark")}
               aria-label="Toggle theme"
             >
               <div
@@ -96,10 +118,10 @@ export default function Header() {
             <button
               className="relative w-12 h-12 rounded-full glass-strong flex items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer"
               style={{ boxShadow: "var(--shadow-elevation-low)" }}
-              onClick={() => setIsDark(!isDark)}
+              onClick={() => setTheme(isDark ? "light" : "dark")}
               aria-label="Toggle theme"
             >
-              <Moon className="w-5 h-5 text-white" />
+              {isDark ? <Moon className="w-5 h-5 text-white" /> : <Sun className="w-5 h-5 text-amber-500" />}
             </button>
           </div>
 
