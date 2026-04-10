@@ -168,10 +168,20 @@ const SkillsGlobe = () => {
 
   return (
     <div 
-      className="relative w-full h-[600px] flex items-center justify-center cursor-grab active:cursor-grabbing perspective-1000 select-none overflow-hidden"
+      className="relative w-full min-h-[700px] flex flex-col items-center justify-center cursor-grab active:cursor-grabbing perspective-1000 select-none overflow-hidden"
       onMouseDown={handleMouseDown}
       ref={containerRef}
     >
+      {/* Title */}
+      <div className="absolute top-4 left-0 w-full text-center z-20 pointer-events-none">
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight opacity-80" style={{ color: 'var(--foreground)' }}>
+          My <span className="text-gradient">Skills</span>
+        </h2>
+        <p className="text-sm mt-3 opacity-50 max-w-xs mx-auto" style={{ color: 'var(--muted)' }}>
+          A collection of technologies I use to build modern digital experiences
+        </p>
+      </div>
+
       {/* 3D Wireframe Mesh Backdrop */}
       <motion.div 
         className="absolute w-[500px] h-[500px] pointer-events-none"
@@ -258,7 +268,7 @@ const SkillsGlobe = () => {
                 {/* Icon Container */}
                 <div className={`
                     w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center p-1
-                    transition-all duration-500 group-hover:!scale-[1.8] group-hover:!opacity-100
+                    transition-all duration-500 group-hover:scale-[1.8]! group-hover:opacity-100!
                     ${isFrontend 
                         ? "scale-110 opacity-100" 
                         : "opacity-40"}
@@ -281,7 +291,7 @@ const SkillsGlobe = () => {
 
                 {/* Conditional Name Display - Only if in the front */}
                 <motion.span 
-                    className="mt-2 whitespace-nowrap text-[9px] font-medium tracking-widest uppercase transition-all duration-300 group-hover:!opacity-100 group-hover:scale-[1.2] origin-top px-2.5 py-0.5 rounded-full group-hover:shadow-lg"
+                    className="mt-2 whitespace-nowrap text-[9px] font-medium tracking-widest uppercase transition-all duration-300 group-hover:opacity-100! group-hover:scale-[1.2] origin-top px-2.5 py-0.5 rounded-full group-hover:shadow-lg"
                     style={{ 
                         opacity: nameOpacity,
                         backgroundColor: hoveredSkill === point.name ? (skillColors[point.name] || '#4B5563') : 'transparent',
