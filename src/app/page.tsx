@@ -3,8 +3,8 @@ import Header from "@/components/portfolio/Header";
 import Hero from "@/components/portfolio/Hero";
 import About from "@/components/portfolio/About";
 import Projects from "@/components/portfolio/Projects";
-import Skills from "@/components/portfolio/Skills";
 import Footer from "@/components/portfolio/Footer";
+import SkillsGlobe from "@/components/portfolio/SkillsGlobe";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
       <Projects />
 
       {/* Skills Section */}
-      <Skills />
+      <SkillsGlobe />
 
       {/* Footer */}
       <Footer />
