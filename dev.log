@@ -3,22 +3,20 @@
  To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
    See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
  Detected additional lockfiles: 
-   * /home/woyce/Desktop/Ankit_4/dd/next-portfolio/package-lock.json
+   * /home/woyce/Desktop/Ankit_P/ank_1/next-portfolio/package-lock.json
+   * /home/woyce/Desktop/Ankit_P/ank_1/package-lock.json
 
 ▲ Next.js 16.1.6 (Turbopack)
 - Local:         http://localhost:3000
-- Network:       http://192.168.0.192:3000
+- Network:       http://192.168.0.182:3000
+- Environments: .env
 
 ✓ Starting...
-✓ Ready in 765ms
- GET / 200 in 576ms (compile: 307ms, render: 269ms)
-✓ Compiled in 747ms
-✓ Compiled in 57ms
-✓ Compiled in 134ms
-✓ Compiled in 59ms
-✓ Compiled in 123ms
-✓ Compiled in 168ms
-✓ Compiled in 85ms
-✓ Compiled in 51ms
-✓ Compiled in 62ms
-✓ Compiled in 33ms
+✓ Ready in 633ms
+ GET / 200 in 837ms (compile: 593ms, render: 244ms)
+ GET / 200 in 83ms (compile: 5ms, render: 78ms)
+ POST /api/contact 200 in 2.8s (compile: 78ms, render: 2.7s)
+✓ Compiled in 69ms
+✓ Compiled in 56ms
+✓ Compiled in 69ms
+✓ Compiled in 286ms

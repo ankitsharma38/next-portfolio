@@ -60,8 +60,13 @@ const SkillsGlobe = () => {
   const lastScrollY = useRef(0);
   const [currentRotation, setCurrentRotation] = useState({ x: 0, y: 0 });
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     return scrollY.on("change", (latest) => {
@@ -74,6 +79,13 @@ const SkillsGlobe = () => {
 
   const points = useMemo(() => {
     const radius = 220;
+    
+    // Deterministic pseudo-random function for hydration consistency
+    const pseudoRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+    
     return icons.map((name, i) => {
       const phi = Math.acos(-1 + (2 * i) / icons.length);
       const theta = Math.sqrt(icons.length * Math.PI) * phi;
@@ -82,9 +94,9 @@ const SkillsGlobe = () => {
         baseX: radius * Math.cos(theta) * Math.sin(phi),
         baseY: radius * Math.sin(theta) * Math.sin(phi),
         baseZ: radius * Math.cos(phi),
-        randomX: (Math.random() - 0.5) * 2000,
-        randomY: (Math.random() - 0.5) * 2000,
-        randomZ: (Math.random() - 0.5) * 2000,
+        randomX: (pseudoRandom(i * 3) - 0.5) * 2000,
+        randomY: (pseudoRandom(i * 3 + 1) - 0.5) * 2000,
+        randomZ: (pseudoRandom(i * 3 + 2) - 0.5) * 2000,
       };
     });
   }, []);
@@ -168,7 +180,8 @@ const SkillsGlobe = () => {
 
   return (
     <div 
-      className="relative w-full min-h-[700px] flex flex-col items-center justify-center cursor-grab active:cursor-grabbing perspective-1000 select-none overflow-hidden"
+      id="skills"
+      className="relative z-0 w-full min-h-[700px] flex flex-col items-center justify-center cursor-grab active:cursor-grabbing perspective-1000 select-none overflow-hidden"
       onMouseDown={handleMouseDown}
       ref={containerRef}
     >
@@ -183,46 +196,48 @@ const SkillsGlobe = () => {
       </div>
 
       {/* 3D Wireframe Mesh Backdrop */}
-      <motion.div 
-        className="absolute w-[500px] h-[500px] pointer-events-none"
-        style={{
-          rotateX: currentRotation.x * 50,
-          rotateY: currentRotation.y * 50,
-          opacity: gatherProgress.current * 0.2,
-        }}
-      >
-        <svg viewBox="0 0 100 100" className="w-full h-full" style={{ color: 'var(--accent)' }}>
-          <defs>
-            <radialGradient id="ringGrad">
-              <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          {/* Latitude Lines */}
-          {[...Array(8)].map((_, i) => (
-            <ellipse 
-              key={`lat-${i}`}
-              cx="50" cy="50" rx="48" ry={10 + i * 8}
-              fill="none" stroke="currentColor" strokeWidth="0.1"
-              style={{ opacity: 0.3 }}
-            />
-          ))}
-          {/* Longitude Lines */}
-          {[...Array(8)].map((_, i) => (
-            <ellipse 
-              key={`lon-${i}`}
-              cx="50" cy="50" rx={10 + i * 8} ry="48"
-              fill="none" stroke="currentColor" strokeWidth="0.1"
-              style={{ opacity: 0.3 }}
-            />
-          ))}
-        </svg>
-      </motion.div>
+      {mounted && (
+        <motion.div 
+          className="absolute w-[500px] h-[500px] pointer-events-none"
+          style={{
+            rotateX: currentRotation.x * 50,
+            rotateY: currentRotation.y * 50,
+            opacity: gatherProgress.current * 0.2,
+          }}
+        >
+          <svg viewBox="0 0 100 100" className="w-full h-full" style={{ color: 'var(--accent)' }}>
+            <defs>
+              <radialGradient id="ringGrad">
+                <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            {/* Latitude Lines */}
+            {[...Array(8)].map((_, i) => (
+              <ellipse 
+                key={`lat-${i}`}
+                cx="50" cy="50" rx="48" ry={10 + i * 8}
+                fill="none" stroke="currentColor" strokeWidth="0.1"
+                style={{ opacity: 0.3 }}
+              />
+            ))}
+            {/* Longitude Lines */}
+            {[...Array(8)].map((_, i) => (
+              <ellipse 
+                key={`lon-${i}`}
+                cx="50" cy="50" rx={10 + i * 8} ry="48"
+                fill="none" stroke="currentColor" strokeWidth="0.1"
+                style={{ opacity: 0.3 }}
+              />
+            ))}
+          </svg>
+        </motion.div>
+      )}
 
       {/* Decorative inner glow */}
       <div className="absolute w-[400px] h-[400px] rounded-full blur-[80px] pointer-events-none" style={{ background: 'var(--accent)', opacity: 0.05 }} />
 
-      {points.map((point) => {
+      {mounted && points.map((point) => {
         const cosY = Math.cos(currentRotation.y);
         const sinY = Math.sin(currentRotation.y);
         const x1 = point.baseX * cosY + point.baseZ * sinY;

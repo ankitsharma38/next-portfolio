@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun, Calendar, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
+import ContactModal from "./ContactModal";
+import Cursor from "./Cursor";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -101,13 +103,7 @@ export default function Header() {
 
           {/* Book a Call - Right */}
           <div className="absolute right-0">
-            <button
-              className="glass-strong rounded-full shadow-xl shadow-black/10 flex items-center gap-2 text-sm font-semibold transition-transform duration-300 hover:scale-105 h-14 px-6"
-              style={{ color: "var(--foreground)" }}
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Book a Call</span>
-            </button>
+            <ContactModal />
           </div>
         </div>
 
@@ -144,13 +140,17 @@ export default function Header() {
 
           {/* Book a Call - Right */}
           <div className="absolute right-0">
-            <button
-              className="glass-strong rounded-full shadow-xl shadow-black/10 flex items-center gap-2 text-sm font-semibold transition-transform duration-300 px-4 py-3"
-              style={{ color: "var(--foreground)" }}
-            >
-              <Calendar className="w-4 h-4" />
-              <span className="hidden sm:inline">Book a Call</span>
-            </button>
+            <ContactModal>
+              <Cursor magnetic>
+                <button
+                  className="glass-strong rounded-full shadow-xl shadow-black/10 flex items-center gap-2 text-sm font-semibold transition-transform duration-300 px-4 py-3"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span className="hidden sm:inline">Book a Call</span>
+                </button>
+              </Cursor>
+            </ContactModal>
           </div>
         </div>
 
@@ -173,13 +173,17 @@ export default function Header() {
                     {item.name}
                   </button>
                 ))}
-                <button
-                  className="flex items-center justify-center gap-2 text-sm font-semibold rounded-full transition-transform duration-300 mt-2 hover:scale-[1.02] py-3"
-                  style={{ color: "var(--foreground)", border: "1px solid var(--card-border)" }}
-                >
-                  <Calendar className="w-4 h-4" />
-                  <span>Book a Call</span>
-                </button>
+              <ContactModal>
+                  <Cursor magnetic>
+                    <button
+                      className="flex items-center justify-center gap-2 text-sm font-semibold rounded-full transition-transform duration-300 mt-2 hover:scale-[1.02] py-3 w-full"
+                      style={{ color: "var(--foreground)", border: "1px solid var(--card-border)" }}
+                    >
+                      <Calendar className="w-4 h-4" />
+                      <span>Book a Call</span>
+                    </button>
+                  </Cursor>
+                </ContactModal>
               </div>
             </div>
           </div>
