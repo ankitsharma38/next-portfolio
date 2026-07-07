@@ -12,11 +12,5 @@
 - Environments: .env
 
 ✓ Starting...
-✓ Ready in 633ms
- GET / 200 in 837ms (compile: 593ms, render: 244ms)
- GET / 200 in 83ms (compile: 5ms, render: 78ms)
- POST /api/contact 200 in 2.8s (compile: 78ms, render: 2.7s)
-✓ Compiled in 69ms
-✓ Compiled in 56ms
-✓ Compiled in 69ms
-✓ Compiled in 286ms
+✓ Ready in 1153ms
+ GET / 200 in 705ms (compile: 470ms, render: 235ms)
