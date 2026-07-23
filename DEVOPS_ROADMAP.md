@@ -109,4 +109,4 @@ A step-by-step practical guide to mastering DevOps concepts using your **Next.js
 | Step 1: Dockerfile & Containerization | ✅ Completed | Created `.dockerignore` & `Dockerfile` |
 | Step 2: Docker Compose | ✅ Completed | Created `docker-compose.yml` |
 | Step 3: GitHub Actions CI/CD | ✅ Completed | Built `.github/workflows/ci-cd.yml` |
-| Step 4: Netlify Free Deployment | ⏳ Pending | Connect GitHub to Netlify |
+| Step 4: Netlify Free Deployment | ✅ Completed | Configured `netlify.toml` & CI/CD Deploy |
