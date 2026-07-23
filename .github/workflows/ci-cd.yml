@@ -11,6 +11,9 @@ jobs:
   build-and-test:
     name: Lint & Build Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Repository
@@ -36,6 +39,9 @@ jobs:
     name: Docker Build & Push
     needs: build-and-test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
